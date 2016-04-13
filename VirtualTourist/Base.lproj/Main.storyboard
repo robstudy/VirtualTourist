@@ -50,10 +50,10 @@
             </objects>
             <point key="canvasLocation" x="310" y="429"/>
         </scene>
-        <!--View Controller-->
+        <!--Photo AlbumVC-->
         <scene sceneID="IgP-1Z-ORZ">
             <objects>
-                <viewController id="eba-Pz-70E" sceneMemberID="viewController">
+                <viewController id="eba-Pz-70E" customClass="PhotoAlbumVC" customModule="VirtualTourist" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jwJ-eg-DU1"/>
                         <viewControllerLayoutGuide type="bottom" id="y4q-tX-b0I"/>
@@ -65,14 +65,26 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="c67-yN-gRu">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <subviews>
+                                    <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xag-qo-pzU">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="50"/>
+                                        <items>
+                                            <navigationItem id="YU4-SI-eWm">
+                                                <barButtonItem key="leftBarButtonItem" title="BACK" id="akZ-eL-zEd">
+                                                    <connections>
+                                                        <action selector="back:" destination="eba-Pz-70E" id="C0G-Pr-Zmm"/>
+                                                    </connections>
+                                                </barButtonItem>
+                                            </navigationItem>
+                                        </items>
+                                    </navigationBar>
                                     <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="ZEF-Qw-0nO">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="152"/>
+                                        <rect key="frame" x="0.0" y="50" width="600" height="170"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="152" id="BWm-C0-NvY"/>
+                                            <constraint firstAttribute="height" constant="170" id="UaZ-rX-g8a"/>
                                         </constraints>
                                     </mapView>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="7YS-8t-2Nn">
-                                        <rect key="frame" x="0.0" y="152" width="600" height="448"/>
+                                        <rect key="frame" x="0.0" y="220" width="600" height="380"/>
                                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Xt6-vi-d1t">
                                             <size key="itemSize" width="137" height="120"/>
                                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -92,6 +104,9 @@
                                         </cells>
                                     </collectionView>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstItem="ZEF-Qw-0nO" firstAttribute="top" secondItem="c67-yN-gRu" secondAttribute="top" constant="50" id="mM4-J0-H1p"/>
+                                </constraints>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -102,6 +117,9 @@
                             <constraint firstItem="c67-yN-gRu" firstAttribute="top" secondItem="MeR-oh-ZID" secondAttribute="topMargin" id="yeO-cj-RAi"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="mapView" destination="ZEF-Qw-0nO" id="V8q-K0-LNf"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Q5h-D3-85w" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

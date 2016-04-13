@@ -51,7 +51,7 @@ class TravelLocationVC: UIViewController, MKMapViewDelegate, UIGestureRecognizer
         }
         
         let pinDrop = UILongPressGestureRecognizer(target: self, action: "dropPin:")
-        pinDrop.minimumPressDuration = 2.0
+        pinDrop.minimumPressDuration = 1.5
         self.travelMap.addGestureRecognizer(pinDrop)
         
         do {
@@ -61,6 +61,7 @@ class TravelLocationVC: UIViewController, MKMapViewDelegate, UIGestureRecognizer
         }
         
         fetchedResultsController.delegate = self
+        travelMap.delegate = self
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -87,7 +88,7 @@ class TravelLocationVC: UIViewController, MKMapViewDelegate, UIGestureRecognizer
     
     //MARK: - MapView Delegate
     
-    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+    /*func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
         
         let reuseId = "pin"
         
@@ -103,7 +104,7 @@ class TravelLocationVC: UIViewController, MKMapViewDelegate, UIGestureRecognizer
         }
         
         return pinView
-    }
+    }*/
     
     //MARK: - Drop Pin
     
@@ -136,7 +137,6 @@ class TravelLocationVC: UIViewController, MKMapViewDelegate, UIGestureRecognizer
         }
     }
     
-    
     //MARK: - Core Data Convenience
     
     var sharedContext: NSManagedObjectContext {
@@ -158,9 +158,6 @@ class TravelLocationVC: UIViewController, MKMapViewDelegate, UIGestureRecognizer
         
         return fetchedResultsController
     }()
-    
-    /*func controllerWillChangeContent(controller: NSFetchedResultsController) {
-    }*/
     
     private func addAllPins() {
         
@@ -184,6 +181,10 @@ class TravelLocationVC: UIViewController, MKMapViewDelegate, UIGestureRecognizer
         }
         
         travelMap.addAnnotations(annotations)
+    }
+    
+    func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
+        self.performSegueWithIdentifier("showAlbum", sender: view)
     }
 
     /*
