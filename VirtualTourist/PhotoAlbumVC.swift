@@ -9,12 +9,19 @@
 import UIKit
 import MapKit
 
-class PhotoAlbumVC: UIViewController {
+class PhotoAlbumVC: UIViewController, MKMapViewDelegate {
     
     @IBOutlet weak var mapView: MKMapView!
     
+    var latitude: Double?
+    var longitude: Double?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        mapView.delegate = self
+        loadPinLocation()
+        print("\(latitude) \(longitude)")
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -26,7 +33,18 @@ class PhotoAlbumVC: UIViewController {
     }
     
     func loadPinLocation () {
-        //let geo = CLGeocoder()
+        mapView.zoomEnabled = false
+        mapView.scrollEnabled = false
+        mapView.userInteractionEnabled = false
+        mapView.region.center.latitude = latitude!
+        mapView.region.center.longitude = longitude!
+        mapView.region.span.latitudeDelta = 0.01
+        mapView.region.span.longitudeDelta = 0.01
+        
+        let pin = MKPointAnnotation()
+        pin.coordinate.latitude = latitude!
+        pin.coordinate.longitude = longitude!
+        
+        mapView.addAnnotation(pin)
     }
-
 }

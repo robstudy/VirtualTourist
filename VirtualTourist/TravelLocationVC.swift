@@ -15,69 +15,33 @@ class TravelLocationVC: UIViewController, MKMapViewDelegate, UIGestureRecognizer
     let prefs = NSUserDefaults.standardUserDefaults()
     
     @IBOutlet weak var travelMap: MKMapView!
+    
+    private var sendLat: Double?
+    private var sendLong: Double?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Do any additional setup after loading the view.
-        guard let latloc: Double = prefs.doubleForKey("lat") else {
-            print("no latitude location yet")
-            return
-        }
-        
-        guard let longloc: Double = prefs.doubleForKey("long") else {
-            print("no longitutde")
-            return
-        }
-        
-        guard let latDelta: Double = prefs.doubleForKey("latDelta") else {
-            print("no latDelta")
-            return
-        }
-        
-        guard let longDelta: Double = prefs.doubleForKey("longDelta") else {
-            print("no longDelta")
-            return
-        }
-        
-        if latloc != 0 && longloc != 0{
-            travelMap.centerCoordinate.latitude = latloc
-            travelMap.centerCoordinate.longitude = longloc
-        }
-        
-        if latDelta != 0 && longDelta != 0 {
-            let span = MKCoordinateSpan(latitudeDelta: latDelta, longitudeDelta: longDelta)
-            travelMap.region.span = span
-        }
+        persistentMap()
         
         let pinDrop = UILongPressGestureRecognizer(target: self, action: "dropPin:")
         pinDrop.minimumPressDuration = 1.5
         self.travelMap.addGestureRecognizer(pinDrop)
-        
-        do {
-            try fetchedResultsController.performFetch()
-        } catch {
-            print(error)
-        }
         
         fetchedResultsController.delegate = self
         travelMap.delegate = self
     }
     
     override func viewWillDisappear(animated: Bool) {
-        
-        let latDelta = travelMap.region.span.latitudeDelta
-        let longDelta = travelMap.region.span.longitudeDelta
-        let lat: Double = travelMap.centerCoordinate.latitude
-        let long: Double = travelMap.centerCoordinate.longitude
-        
-        prefs.setDouble(lat, forKey: "lat")
-        prefs.setDouble(long, forKey: "long")
-        prefs.setDouble(latDelta, forKey: "latDelta")
-        prefs.setDouble(longDelta, forKey: "longDelta")
+        saveMapState()
     }
     
     override func viewWillAppear(animated: Bool) {
+        do {
+            try fetchedResultsController.performFetch()
+        } catch {
+            print(error)
+        }
         addAllPins()
     }
 
@@ -88,23 +52,11 @@ class TravelLocationVC: UIViewController, MKMapViewDelegate, UIGestureRecognizer
     
     //MARK: - MapView Delegate
     
-    /*func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
-        
-        let reuseId = "pin"
-        
-        var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier(reuseId) as? MKPinAnnotationView
-        
-        if pinView == nil {
-            pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
-            pinView!.canShowCallout = true
-            pinView!.pinTintColor = UIColor.orangeColor()
-            pinView!.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
-        } else {
-            pinView!.annotation = annotation
-        }
-        
-        return pinView
-    }*/
+    func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
+        sendLat = view.annotation?.coordinate.latitude
+        sendLong = view.annotation?.coordinate.longitude
+        self.performSegueWithIdentifier("showAlbum", sender: view)
+    }
     
     //MARK: - Drop Pin
     
@@ -177,24 +129,64 @@ class TravelLocationVC: UIViewController, MKMapViewDelegate, UIGestureRecognizer
             annotation.coordinate = coordinate
             
             annotations.append(annotation)
-            print("Pin: \(entity.longitude) \(entity.latitude)")
         }
         
         travelMap.addAnnotations(annotations)
     }
-    
-    func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
-        self.performSegueWithIdentifier("showAlbum", sender: view)
-    }
 
-    /*
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if (segue.identifier == "showAlbum") {
+            let album = segue.destinationViewController as! PhotoAlbumVC
+            album.latitude = sendLat
+            album.longitude = sendLong
+        }
     }
-    */
-
+    
+    //MARK: - Persist map functions
+    
+    private func persistentMap() {
+        guard let latloc: Double = prefs.doubleForKey("lat") else {
+            print("no latitude location yet")
+            return
+        }
+        
+        guard let longloc: Double = prefs.doubleForKey("long") else {
+            print("no longitutde")
+            return
+        }
+        
+        guard let latDelta: Double = prefs.doubleForKey("latDelta") else {
+            print("no latDelta")
+            return
+        }
+        
+        guard let longDelta: Double = prefs.doubleForKey("longDelta") else {
+            print("no longDelta")
+            return
+        }
+        
+        if latloc != 0 && longloc != 0{
+            travelMap.centerCoordinate.latitude = latloc
+            travelMap.centerCoordinate.longitude = longloc
+        }
+        
+        if latDelta != 0 && longDelta != 0 {
+            let span = MKCoordinateSpan(latitudeDelta: latDelta, longitudeDelta: longDelta)
+            travelMap.region.span = span
+        }
+    }
+    
+    private func saveMapState() {
+        let latDelta = travelMap.region.span.latitudeDelta
+        let longDelta = travelMap.region.span.longitudeDelta
+        let lat: Double = travelMap.centerCoordinate.latitude
+        let long: Double = travelMap.centerCoordinate.longitude
+        
+        prefs.setDouble(lat, forKey: "lat")
+        prefs.setDouble(long, forKey: "long")
+        prefs.setDouble(latDelta, forKey: "latDelta")
+        prefs.setDouble(longDelta, forKey: "longDelta")
+    }
 }

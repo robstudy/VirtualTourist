@@ -11,7 +11,7 @@ import Foundation
 extension FlickrAPI {
     
     struct FlickrStrings {
-        static let API_KEY = "a128b4015d14b0f0a984802e2de8b947"
+        static let API_KEY = "2a2c8e47d731e1f7d1c57322fc734e4b"
     }
     
 }
