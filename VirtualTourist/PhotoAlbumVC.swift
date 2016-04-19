@@ -9,9 +9,10 @@
 import UIKit
 import MapKit
 
-class PhotoAlbumVC: UIViewController, MKMapViewDelegate {
+class PhotoAlbumVC: UIViewController, MKMapViewDelegate, UICollectionViewDelegate {
     
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var photoCollection: UICollectionView!
     
     var latitude: Double?
     var longitude: Double?
@@ -44,6 +45,19 @@ class PhotoAlbumVC: UIViewController, MKMapViewDelegate {
         let pin = MKPointAnnotation()
         pin.coordinate.latitude = latitude!
         pin.coordinate.longitude = longitude!
+    
+        var dataArray = [String]()
+
+        
+        FlickrAPI.sharedSession().getImageFromFlickr(latitude!, longitude: longitude!){returnedData in
+            
+            for item in returnedData {
+                dataArray.append(item)
+            }
+            print(dataArray.count)
+        }
+        
+
         
         mapView.addAnnotation(pin)
     }

@@ -119,6 +119,7 @@
                     </view>
                     <connections>
                         <outlet property="mapView" destination="ZEF-Qw-0nO" id="V8q-K0-LNf"/>
+                        <outlet property="photoCollection" destination="7YS-8t-2Nn" id="hp9-rv-AsB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Q5h-D3-85w" userLabel="First Responder" sceneMemberID="firstResponder"/>
