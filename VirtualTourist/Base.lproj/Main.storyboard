@@ -83,8 +83,9 @@
                                             <constraint firstAttribute="height" constant="170" id="UaZ-rX-g8a"/>
                                         </constraints>
                                     </mapView>
-                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="7YS-8t-2Nn">
+                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="7YS-8t-2Nn" customClass="PhotoViewCollection" customModule="VirtualTourist" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="220" width="600" height="380"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Xt6-vi-d1t">
                                             <size key="itemSize" width="137" height="120"/>
                                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -92,14 +93,31 @@
                                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         </collectionViewFlowLayout>
                                         <cells>
-                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="imageCell" id="b0t-hK-qFh">
+                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="photoCell" id="b0t-hK-qFh">
                                                 <rect key="frame" x="0.0" y="0.0" width="137" height="120"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                                     <rect key="frame" x="0.0" y="0.0" width="137" height="120"/>
                                                     <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="3oi-FY-UoG">
+                                                            <rect key="frame" x="0.0" y="0.0" width="137" height="120"/>
+                                                        </imageView>
+                                                    </subviews>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 </view>
+                                                <constraints>
+                                                    <constraint firstAttribute="bottom" secondItem="3oi-FY-UoG" secondAttribute="bottom" id="2Uy-ZR-eZi"/>
+                                                    <constraint firstAttribute="trailingMargin" secondItem="3oi-FY-UoG" secondAttribute="trailing" constant="-8" id="avQ-xN-mdc"/>
+                                                    <constraint firstItem="3oi-FY-UoG" firstAttribute="bottom" secondItem="b0t-hK-qFh" secondAttribute="bottomMargin" id="cpz-ui-EYE"/>
+                                                    <constraint firstItem="3oi-FY-UoG" firstAttribute="top" secondItem="b0t-hK-qFh" secondAttribute="topMargin" constant="-8" id="cwc-Xz-gJt"/>
+                                                    <constraint firstItem="3oi-FY-UoG" firstAttribute="leading" secondItem="b0t-hK-qFh" secondAttribute="leadingMargin" constant="-8" id="qhf-mM-Xcu"/>
+                                                </constraints>
+                                                <variation key="default">
+                                                    <mask key="constraints">
+                                                        <exclude reference="cpz-ui-EYE"/>
+                                                    </mask>
+                                                </variation>
                                             </collectionViewCell>
                                         </cells>
                                     </collectionView>

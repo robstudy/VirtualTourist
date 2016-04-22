@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class PhotoAlbumVC: UIViewController, MKMapViewDelegate, UICollectionViewDelegate {
+class PhotoAlbumVC: UIViewController, MKMapViewDelegate {
     
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var photoCollection: UICollectionView!
@@ -56,9 +56,6 @@ class PhotoAlbumVC: UIViewController, MKMapViewDelegate, UICollectionViewDelegat
             }
             print(dataArray.count)
         }
-        
-
-        
         mapView.addAnnotation(pin)
     }
 }
