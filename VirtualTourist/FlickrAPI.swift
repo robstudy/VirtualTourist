@@ -16,8 +16,9 @@ class FlickrAPI {
     func getImageFromFlickr(latitude: Double, longitude: Double, completion: (returnedData: [String])-> Void){
         
         var returnedArray = [String]()
+        var returnedDictionary = Dictionary<String, String>()
         
-        let urlString = "\(FlickrStrings.BASE_URL)?method=\(FlickrStrings.METHOD_NAME)&api_key=\(FlickrStrings.API_KEY)&lat=\(latitude)&lon=\(longitude)&page=1&format=json&nojsoncallback=1&extras=url_m"
+        let urlString = "\(FlickrStrings.BASE_URL)?method=\(FlickrStrings.METHOD_NAME)&api_key=\(FlickrStrings.API_KEY)&lat=\(latitude)&lon=\(longitude)&page=1&format=json&nojsoncallback=1&extras=\(FlickrStrings.EXTRAS)"
         let url = NSURL(string: urlString)!
         let request = NSURLRequest(URL: url)
         
@@ -71,8 +72,15 @@ class FlickrAPI {
                         return
                     }
                     
+                    guard let imageId = item["id"] as? String else {
+                        print("Cannot find id in dictionary")
+                        return
+                    }
+                    
                     returnedArray.append(imageURLString)
+                    returnedDictionary[imageId] = imageURLString
                 }
+                print(returnedDictionary)
                 completion(returnedData: returnedArray)
             }
         }
