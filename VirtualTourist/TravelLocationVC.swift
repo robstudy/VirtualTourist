@@ -18,6 +18,7 @@ class TravelLocationVC: UIViewController, MKMapViewDelegate, UIGestureRecognizer
     
     private var sendLat: Double?
     private var sendLong: Double?
+    private var holdPin: Pin!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,7 +56,11 @@ class TravelLocationVC: UIViewController, MKMapViewDelegate, UIGestureRecognizer
     func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
         sendLat = view.annotation?.coordinate.latitude
         sendLong = view.annotation?.coordinate.longitude
-        self.performSegueWithIdentifier("showAlbum", sender: view)
+        findPinToSend(sendLat!, long: sendLong!, completionHandler: { foundPin in
+            if foundPin {
+                self.performSegueWithIdentifier("showAlbum", sender: view)
+            }
+        })
     }
     
     //MARK: - Drop Pin
@@ -141,6 +146,7 @@ class TravelLocationVC: UIViewController, MKMapViewDelegate, UIGestureRecognizer
             let album = segue.destinationViewController as! PhotoAlbumVC
             album.latitude = sendLat
             album.longitude = sendLong
+            album.pin = holdPin
         }
     }
     
@@ -188,5 +194,17 @@ class TravelLocationVC: UIViewController, MKMapViewDelegate, UIGestureRecognizer
         prefs.setDouble(long, forKey: "long")
         prefs.setDouble(latDelta, forKey: "latDelta")
         prefs.setDouble(longDelta, forKey: "longDelta")
+    }
+    
+    //Mark: - Find Pin
+    private func findPinToSend(lat: Double, long: Double, completionHandler: (foundPin: Bool) -> Void) {
+        for entity in self.fetchedResultsController.fetchedObjects!{
+            let pin = entity as! Pin
+            if lat == pin.latitude && long == pin.longitude {
+                holdPin = pin
+                print("Found pin!")
+                completionHandler(foundPin: true)
+            }
+        }
     }
 }
