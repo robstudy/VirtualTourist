@@ -26,26 +26,13 @@ class PhotoAlbumVC: UIViewController, MKMapViewDelegate, NSFetchedResultsControl
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        mapView.delegate = self
-        photoCollection.delegate = self
-        photoCollection.dataSource = self
-        loadPinLocation()
-        photoCollection.registerClass(PhotoCellCVC.self, forCellWithReuseIdentifier: "photoCell")
-        print("\(latitude) \(longitude)")
-        
-        photoCollection.backgroundColor = UIColor.whiteColor()
-        let space: CGFloat = 3.0
-        let dimension = (self.view.frame.width - (2 * space)) / 3.0
-        flowLayout.minimumInteritemSpacing = space
-        flowLayout.itemSize = CGSizeMake(dimension, dimension)
-        
         do {
             try fetchedResultsController.performFetch()
         } catch {
             print(error)
         }
-        fetchedResultsController.delegate = self
+        configureController()
+        loadPinLocation()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -55,11 +42,6 @@ class PhotoAlbumVC: UIViewController, MKMapViewDelegate, NSFetchedResultsControl
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
     }
-    
-    @IBAction func back(sender: AnyObject) {
-    self.dismissViewControllerAnimated(true, completion: nil)
-    }
-
     
     func loadPinLocation () {
         mapView.zoomEnabled = false
@@ -77,13 +59,11 @@ class PhotoAlbumVC: UIViewController, MKMapViewDelegate, NSFetchedResultsControl
         mapView.addAnnotation(pin)
     }
     
-    
     //MARK: - Collection View
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        let fetchedSectionNumber = self.fetchedResultsController.sections![section]
         if(section < 4) {
-            return fetchedSectionNumber.numberOfObjects
+            return self.fetchedResultsController.sections![section].numberOfObjects
         } else {
             return 3
         }
@@ -92,9 +72,9 @@ class PhotoAlbumVC: UIViewController, MKMapViewDelegate, NSFetchedResultsControl
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! PhotoCellCVC
         
-        let photoImage = fetchedResultsController.objectAtIndexPath(indexPath)
+        let photoImage = fetchedResultsController.objectAtIndexPath(indexPath) as! Photo
         
-        let urlData1 = UIImage(data: photoImage.valueForKey("image")! as! NSData)
+        let urlData1 = UIImage(data: photoImage.image)
         let imageView = UIImageView(image: urlData1)
         cell.backgroundView = imageView
         return cell
@@ -106,7 +86,7 @@ class PhotoAlbumVC: UIViewController, MKMapViewDelegate, NSFetchedResultsControl
         return CoreDataStackManager.sharedInstance().managedObjectContext
     }
     
-    //Mark: - Fetched Results COntroller
+    //Mark: - Fetched Results Controller
     
     lazy var fetchedResultsController: NSFetchedResultsController = {
         let fetchRequest = NSFetchRequest(entityName: "Photo")
@@ -122,11 +102,34 @@ class PhotoAlbumVC: UIViewController, MKMapViewDelegate, NSFetchedResultsControl
         return fetchedResultsController
     }()
     
+    //Mark: - Configure Loaded View
+    
+    private func configureController() {
+        print("\(latitude) \(longitude)")
+        mapView.delegate = self
+        photoCollection.delegate = self
+        photoCollection.dataSource = self
+        fetchedResultsController.delegate = self
+        
+        photoCollection.registerClass(PhotoCellCVC.self, forCellWithReuseIdentifier: "photoCell")
+        photoCollection.backgroundColor = UIColor.whiteColor()
+        
+        let space: CGFloat = 3.0
+        let dimension = (self.view.frame.width - (2 * space)) / 3.0
+        
+        flowLayout.minimumInteritemSpacing = space
+        flowLayout.itemSize = CGSizeMake(dimension, dimension)
+    }
+    
     @IBAction func refreshView(sender: AnyObject) {
         dispatch_async(dispatch_get_main_queue(), {
             self.photoCollection.collectionViewLayout.invalidateLayout()
             self.photoCollection.reloadData()
             self.photoCollection.layoutIfNeeded()
         })
+    }
+    
+    @IBAction func back(sender: AnyObject) {
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
 }

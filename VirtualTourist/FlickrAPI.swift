@@ -80,7 +80,6 @@ class FlickrAPI {
                     returnedArray.append(imageURLString)
                     returnedDictionary[imageId] = imageURLString
                 }
-                print(returnedDictionary)
                 completion(returnedData: returnedDictionary)
             }
         }

@@ -84,8 +84,6 @@ class TravelLocationVC: UIViewController, MKMapViewDelegate, UIGestureRecognizer
         let newPoint = ["latitude": lat, "longitude": long, "uuid": uuid]
         
         let savedPin = Pin(dictionary: newPoint as! [String : AnyObject], context: self.sharedContext)
-        
-        print("Saved Pin: \(savedPin.latitude) \(savedPin.longitude) id: \(uuid)")
 
         self.travelMap.addAnnotation(annotation)
         
@@ -96,10 +94,8 @@ class TravelLocationVC: UIViewController, MKMapViewDelegate, UIGestureRecognizer
                 if let imageData = NSData(contentsOfURL: imageUrl!){
                     let getPhoto = Photo(data: imageData, picId: id, context: self.sharedContext)
                     getPhoto.setValue(savedPin, forKey: "pin")
-                    print(getPhoto)
                 }
             }
-            
         })
         
         do {
