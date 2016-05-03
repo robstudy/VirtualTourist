@@ -12,13 +12,14 @@ import CoreData
 
 class TravelLocationVC: UIViewController, MKMapViewDelegate, UIGestureRecognizerDelegate, NSFetchedResultsControllerDelegate {
     
-    let prefs = NSUserDefaults.standardUserDefaults()
-    
     @IBOutlet weak var travelMap: MKMapView!
     
+    private let prefs = NSUserDefaults.standardUserDefaults()
     private var sendLat: Double?
     private var sendLong: Double?
     private var holdPin: Pin!
+    
+    //MARK: - View Methods
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -78,14 +79,28 @@ class TravelLocationVC: UIViewController, MKMapViewDelegate, UIGestureRecognizer
         
         let lat: Double = touchMapCoordinate.latitude
         let long: Double = touchMapCoordinate.longitude
+        let uuid: String = NSUUID().UUIDString
         
-        let newPoint = ["latitude": lat, "longitude": long]
+        let newPoint = ["latitude": lat, "longitude": long, "uuid": uuid]
         
-        let savedPin = Pin(dictionary: newPoint, context: self.sharedContext)
+        let savedPin = Pin(dictionary: newPoint as! [String : AnyObject], context: self.sharedContext)
         
-        print("\(savedPin.latitude) \(savedPin.longitude)")
+        print("Saved Pin: \(savedPin.latitude) \(savedPin.longitude) id: \(uuid)")
 
         self.travelMap.addAnnotation(annotation)
+        
+        FlickrAPI.sharedSession().getImageFromFlickr(lat, longitude: long, completion: { returnedData in
+            
+            for (id, value) in returnedData {
+                let imageUrl = NSURL(string: value)
+                if let imageData = NSData(contentsOfURL: imageUrl!){
+                    let getPhoto = Photo(data: imageData, picId: id, context: self.sharedContext)
+                    getPhoto.setValue(savedPin, forKey: "pin")
+                    print(getPhoto)
+                }
+            }
+            
+        })
         
         do {
             try self.sharedContext.save()
@@ -197,12 +212,14 @@ class TravelLocationVC: UIViewController, MKMapViewDelegate, UIGestureRecognizer
     }
     
     //Mark: - Find Pin
+    
     private func findPinToSend(lat: Double, long: Double, completionHandler: (foundPin: Bool) -> Void) {
         for entity in self.fetchedResultsController.fetchedObjects!{
             let pin = entity as! Pin
             if lat == pin.latitude && long == pin.longitude {
                 holdPin = pin
                 print("Found pin!")
+            
                 completionHandler(foundPin: true)
             }
         }

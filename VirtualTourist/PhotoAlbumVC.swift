@@ -39,14 +39,17 @@ class PhotoAlbumVC: UIViewController, MKMapViewDelegate, NSFetchedResultsControl
         let dimension = (self.view.frame.width - (2 * space)) / 3.0
         flowLayout.minimumInteritemSpacing = space
         flowLayout.itemSize = CGSizeMake(dimension, dimension)
-    }
-    
-    override func viewDidAppear(animated: Bool) {
+        
         do {
             try fetchedResultsController.performFetch()
         } catch {
             print(error)
         }
+        fetchedResultsController.delegate = self
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -71,27 +74,16 @@ class PhotoAlbumVC: UIViewController, MKMapViewDelegate, NSFetchedResultsControl
         pin.coordinate.latitude = latitude!
         pin.coordinate.longitude = longitude!
     
-        var dataArray = [String]()
-
-        
-        FlickrAPI.sharedSession().getImageFromFlickr(latitude!, longitude: longitude!){returnedData in
-            
-            for item in returnedData {
-                dataArray.append(item)
-            }
-            print(dataArray.count)
-            self.photoArray = dataArray
-        }
         mapView.addAnnotation(pin)
     }
     
     
     //MARK: - Collection View
     
-    
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        let fetchedSectionNumber = self.fetchedResultsController.sections![section]
         if(section < 4) {
-            return photoArray.count
+            return fetchedSectionNumber.numberOfObjects
         } else {
             return 3
         }
@@ -100,15 +92,11 @@ class PhotoAlbumVC: UIViewController, MKMapViewDelegate, NSFetchedResultsControl
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! PhotoCellCVC
         
-        let image = photoArray[indexPath.item] as! String
-        let imageURL = NSURL(string: image)
-        if let imageData = NSData(contentsOfURL: imageURL!) {
-            let urlData = UIImage(data: imageData)
-            let imageView = UIImageView(image: urlData)
-            
-            cell.backgroundView = imageView
-            
-        }
+        let photoImage = fetchedResultsController.objectAtIndexPath(indexPath)
+        
+        let urlData1 = UIImage(data: photoImage.valueForKey("image")! as! NSData)
+        let imageView = UIImageView(image: urlData1)
+        cell.backgroundView = imageView
         return cell
     }
     
@@ -133,7 +121,6 @@ class PhotoAlbumVC: UIViewController, MKMapViewDelegate, NSFetchedResultsControl
         
         return fetchedResultsController
     }()
-    
     
     @IBAction func refreshView(sender: AnyObject) {
         dispatch_async(dispatch_get_main_queue(), {

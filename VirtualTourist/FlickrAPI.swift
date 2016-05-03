@@ -13,7 +13,7 @@ private let sharedAPI = FlickrAPI()
 class FlickrAPI {
     private var session = NSURLSession.sharedSession()
     
-    func getImageFromFlickr(latitude: Double, longitude: Double, completion: (returnedData: [String])-> Void){
+    func getImageFromFlickr(latitude: Double, longitude: Double, completion: (returnedData: Dictionary<String, String>)-> Void){
         
         var returnedArray = [String]()
         var returnedDictionary = Dictionary<String, String>()
@@ -81,7 +81,7 @@ class FlickrAPI {
                     returnedDictionary[imageId] = imageURLString
                 }
                 print(returnedDictionary)
-                completion(returnedData: returnedArray)
+                completion(returnedData: returnedDictionary)
             }
         }
         task.resume()

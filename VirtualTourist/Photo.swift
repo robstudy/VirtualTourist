@@ -36,4 +36,5 @@ class Photo: NSManagedObject {
         //Id
         id = picId
     }
+    
 }
