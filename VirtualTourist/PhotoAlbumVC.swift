@@ -26,17 +26,9 @@ class PhotoAlbumVC: UIViewController, MKMapViewDelegate, NSFetchedResultsControl
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        do {
-            try fetchedResultsController.performFetch()
-        } catch {
-            print(error)
-        }
+        performFetch()
         configureController()
         loadPinLocation()
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -62,6 +54,7 @@ class PhotoAlbumVC: UIViewController, MKMapViewDelegate, NSFetchedResultsControl
     //MARK: - Collection View
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        print(self.fetchedResultsController.sections![section].numberOfObjects)
         if(section < 4) {
             return self.fetchedResultsController.sections![section].numberOfObjects
         } else {
@@ -80,6 +73,17 @@ class PhotoAlbumVC: UIViewController, MKMapViewDelegate, NSFetchedResultsControl
         return cell
     }
     
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        
+        let photoIndex = fetchedResultsController.objectAtIndexPath(indexPath) as! Photo
+        
+        sharedContext.deleteObject(photoIndex)
+        
+        saveData()
+        performFetch()
+        resetView()
+    }
+    
     //Core Data Convenience
     
     var sharedContext: NSManagedObjectContext {
@@ -92,7 +96,7 @@ class PhotoAlbumVC: UIViewController, MKMapViewDelegate, NSFetchedResultsControl
         let fetchRequest = NSFetchRequest(entityName: "Photo")
         
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "id", ascending: true)]
-        fetchRequest.predicate = NSPredicate(format: "pin == %@", self.pin)
+        fetchRequest.predicate = NSPredicate(format: "pin.uuid == %@", self.pin.uuid)
         
         let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
             managedObjectContext: self.sharedContext,
@@ -122,6 +126,14 @@ class PhotoAlbumVC: UIViewController, MKMapViewDelegate, NSFetchedResultsControl
     }
     
     @IBAction func refreshView(sender: AnyObject) {
+        resetView()
+    }
+    
+    @IBAction func back(sender: AnyObject) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    private func resetView() {
         dispatch_async(dispatch_get_main_queue(), {
             self.photoCollection.collectionViewLayout.invalidateLayout()
             self.photoCollection.reloadData()
@@ -129,7 +141,19 @@ class PhotoAlbumVC: UIViewController, MKMapViewDelegate, NSFetchedResultsControl
         })
     }
     
-    @IBAction func back(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+    private func saveData() {
+        do {
+            try self.sharedContext.save()
+        } catch {
+            print("not saved")
+        }
+    }
+    
+    private func performFetch() {
+        do {
+            try fetchedResultsController.performFetch()
+        } catch {
+            print(error)
+        }
     }
 }

@@ -39,11 +39,7 @@ class TravelLocationVC: UIViewController, MKMapViewDelegate, UIGestureRecognizer
     }
     
     override func viewWillAppear(animated: Bool) {
-        do {
-            try fetchedResultsController.performFetch()
-        } catch {
-            print(error)
-        }
+        performFetch()
         addAllPins()
     }
 
@@ -94,15 +90,15 @@ class TravelLocationVC: UIViewController, MKMapViewDelegate, UIGestureRecognizer
                 if let imageData = NSData(contentsOfURL: imageUrl!){
                     let getPhoto = Photo(data: imageData, picId: id, context: self.sharedContext)
                     getPhoto.setValue(savedPin, forKey: "pin")
+                    print(getPhoto)
+                    self.saveData()
                 }
             }
         })
         
-        do {
-            try self.sharedContext.save()
-        } catch {
-            print("not saved")
-        }
+        saveData()
+        performFetch()
+        addAllPins()
     }
     
     //MARK: - Core Data Convenience
@@ -218,6 +214,24 @@ class TravelLocationVC: UIViewController, MKMapViewDelegate, UIGestureRecognizer
             
                 completionHandler(foundPin: true)
             }
+        }
+    }
+    
+    //Mark: - Save
+    
+    private func saveData() {
+        do {
+            try self.sharedContext.save()
+        } catch {
+            print("not saved")
+        }
+    }
+    
+    private func performFetch() {
+        do {
+            try fetchedResultsController.performFetch()
+        } catch {
+            print(error)
         }
     }
 }
