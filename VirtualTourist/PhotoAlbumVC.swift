@@ -20,6 +20,7 @@ class PhotoAlbumVC: UIViewController, MKMapViewDelegate, NSFetchedResultsControl
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var photoCollection: UICollectionView!
     @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
+    @IBOutlet weak var newCollectionButton: UIButton!
     
     var latitude: Double?
     var longitude: Double?
@@ -114,6 +115,8 @@ class PhotoAlbumVC: UIViewController, MKMapViewDelegate, NSFetchedResultsControl
         photoCollection.delegate = self
         photoCollection.dataSource = self
         fetchedResultsController.delegate = self
+        newCollectionButton.layer.zPosition = 1
+        newCollectionButton.alpha = 0.5
         
         photoCollection.registerClass(PhotoCellCVC.self, forCellWithReuseIdentifier: "photoCell")
         photoCollection.backgroundColor = UIColor.whiteColor()
@@ -123,10 +126,6 @@ class PhotoAlbumVC: UIViewController, MKMapViewDelegate, NSFetchedResultsControl
         
         flowLayout.minimumInteritemSpacing = space
         flowLayout.itemSize = CGSizeMake(dimension, dimension)
-    }
-    
-    @IBAction func refreshView(sender: AnyObject) {
-        resetView()
     }
     
     @IBAction func back(sender: AnyObject) {
@@ -156,4 +155,36 @@ class PhotoAlbumVC: UIViewController, MKMapViewDelegate, NSFetchedResultsControl
             print(error)
         }
     }
+    
+    @IBAction func newCollection(sender: AnyObject) {
+        
+        for entity in fetchedResultsController.fetchedObjects! {
+            sharedContext.deleteObject(entity as! NSManagedObject)
+        }
+        
+        performFetch()
+        resetView()
+        
+        let lat = pin.latitude
+        let long = pin.longitude
+        
+        FlickrAPI.sharedSession().getImageFromFlickr(lat, longitude: long, completion: { returnedData in
+            
+            for (id, value) in returnedData {
+                let imageUrl = NSURL(string: value)
+                if let imageData = NSData(contentsOfURL: imageUrl!){
+                    let getPhoto = Photo(data: imageData, picId: id, context: self.sharedContext)
+                    getPhoto.setValue(self.pin, forKey: "pin")
+                    print(getPhoto)
+                    self.saveData()
+                }
+            }
+            
+            self.performFetch()
+            self.resetView()
+        })
+        
+
+    }
+    
 }

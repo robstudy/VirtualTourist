@@ -74,11 +74,6 @@
                                                         <action selector="back:" destination="eba-Pz-70E" id="C0G-Pr-Zmm"/>
                                                     </connections>
                                                 </barButtonItem>
-                                                <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="Pa5-pj-jxz">
-                                                    <connections>
-                                                        <action selector="refreshView:" destination="eba-Pz-70E" id="jy8-iA-v9Y"/>
-                                                    </connections>
-                                                </barButtonItem>
                                             </navigationItem>
                                         </items>
                                     </navigationBar>
@@ -89,7 +84,7 @@
                                         </constraints>
                                     </mapView>
                                     <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="7YS-8t-2Nn">
-                                        <rect key="frame" x="0.0" y="220" width="600" height="380"/>
+                                        <rect key="frame" x="0.0" y="220" width="600" height="330"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Xt6-vi-d1t">
                                             <size key="itemSize" width="137" height="120"/>
@@ -123,16 +118,36 @@
                                             </collectionViewCell>
                                         </cells>
                                     </collectionView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DS2-ww-LqE">
+                                        <rect key="frame" x="0.0" y="550" width="600" height="50"/>
+                                        <color key="backgroundColor" white="0.66666666666666663" alpha="0.19" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="50" id="7Di-c5-sem"/>
+                                        </constraints>
+                                        <state key="normal" title="New Collection"/>
+                                        <connections>
+                                            <action selector="newCollection:" destination="eba-Pz-70E" eventType="touchUpInside" id="Uy4-me-7ag"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="ZEF-Qw-0nO" firstAttribute="top" secondItem="c67-yN-gRu" secondAttribute="top" constant="50" id="mM4-J0-H1p"/>
                                 </constraints>
                             </stackView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="wGr-qq-BB0">
+                                <rect key="frame" x="225" y="225" width="150" height="150"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="150" id="acj-DZ-Axj"/>
+                                    <constraint firstAttribute="height" constant="150" id="rt1-OQ-3Zy"/>
+                                </constraints>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="c67-yN-gRu" secondAttribute="trailing" constant="-20" id="5XY-Lb-yUY"/>
                             <constraint firstItem="c67-yN-gRu" firstAttribute="leading" secondItem="MeR-oh-ZID" secondAttribute="leadingMargin" constant="-20" id="VkD-X1-iFe"/>
+                            <constraint firstItem="wGr-qq-BB0" firstAttribute="centerY" secondItem="c67-yN-gRu" secondAttribute="centerY" id="Zd1-yk-0e5"/>
+                            <constraint firstItem="wGr-qq-BB0" firstAttribute="centerX" secondItem="c67-yN-gRu" secondAttribute="centerX" id="bTl-Ub-ROo"/>
                             <constraint firstItem="y4q-tX-b0I" firstAttribute="top" secondItem="c67-yN-gRu" secondAttribute="bottom" id="tD9-uc-2v5"/>
                             <constraint firstItem="c67-yN-gRu" firstAttribute="top" secondItem="MeR-oh-ZID" secondAttribute="topMargin" id="yeO-cj-RAi"/>
                         </constraints>
@@ -140,6 +155,7 @@
                     <connections>
                         <outlet property="flowLayout" destination="Xt6-vi-d1t" id="xj2-LH-4LZ"/>
                         <outlet property="mapView" destination="ZEF-Qw-0nO" id="V8q-K0-LNf"/>
+                        <outlet property="newCollectionButton" destination="DS2-ww-LqE" id="dNo-T5-VUd"/>
                         <outlet property="photoCollection" destination="7YS-8t-2Nn" id="3Ht-Nf-SZ4"/>
                     </connections>
                 </viewController>
