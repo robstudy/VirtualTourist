@@ -140,6 +140,7 @@
                                     <constraint firstAttribute="width" constant="150" id="acj-DZ-Axj"/>
                                     <constraint firstAttribute="height" constant="150" id="rt1-OQ-3Zy"/>
                                 </constraints>
+                                <color key="color" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -153,6 +154,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="activityView" destination="wGr-qq-BB0" id="6Hb-Tc-f5D"/>
                         <outlet property="flowLayout" destination="Xt6-vi-d1t" id="xj2-LH-4LZ"/>
                         <outlet property="mapView" destination="ZEF-Qw-0nO" id="V8q-K0-LNf"/>
                         <outlet property="newCollectionButton" destination="DS2-ww-LqE" id="dNo-T5-VUd"/>

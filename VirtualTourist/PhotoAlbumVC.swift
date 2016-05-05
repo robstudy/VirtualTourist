@@ -21,6 +21,7 @@ class PhotoAlbumVC: UIViewController, MKMapViewDelegate, NSFetchedResultsControl
     @IBOutlet weak var photoCollection: UICollectionView!
     @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
     @IBOutlet weak var newCollectionButton: UIButton!
+    @IBOutlet weak var activityView: UIActivityIndicatorView!
     
     var latitude: Double?
     var longitude: Double?
@@ -164,6 +165,7 @@ class PhotoAlbumVC: UIViewController, MKMapViewDelegate, NSFetchedResultsControl
         
         performFetch()
         resetView()
+        toggleActivityView(true)
         
         let lat = pin.latitude
         let long = pin.longitude
@@ -179,12 +181,28 @@ class PhotoAlbumVC: UIViewController, MKMapViewDelegate, NSFetchedResultsControl
                     self.saveData()
                 }
             }
-            
             self.performFetch()
             self.resetView()
+            self.toggleActivityView(false)
         })
-        
+    }
+    
+    private func toggleActivityView(on: Bool) {
+        dispatch_async(dispatch_get_main_queue(), {
+            if on {
+                self.activityView.startAnimating()
+                self.mapView.alpha = 0.5
+                self.newCollectionButton.alpha = 0.5
+                self.newCollectionButton.enabled = false
+            } else {
+                self.activityView.stopAnimating()
+                self.mapView.alpha = 1
+                self.newCollectionButton.alpha = 1
+                self.newCollectionButton.enabled = true
+            }
+        })
 
+        
     }
     
 }
