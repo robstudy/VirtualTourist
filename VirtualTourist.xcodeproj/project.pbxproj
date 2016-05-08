@@ -11,7 +11,6 @@
 		DFEA9F711CAAC7A400C8C281 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFEA9F701CAAC7A400C8C281 /* AppDelegate.swift */; };
 		DFEA9F761CAAC7A400C8C281 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DFEA9F741CAAC7A400C8C281 /* Main.storyboard */; };
 		DFEA9F791CAAC7A400C8C281 /* VirtualTourist.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DFEA9F771CAAC7A400C8C281 /* VirtualTourist.xcdatamodeld */; };
-		DFEA9F7B1CAAC7A500C8C281 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DFEA9F7A1CAAC7A500C8C281 /* Assets.xcassets */; };
 		DFEA9F7E1CAAC7A500C8C281 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DFEA9F7C1CAAC7A500C8C281 /* LaunchScreen.storyboard */; };
 		DFFB66161CCD549C00FB70B8 /* PhotoCellCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFFB66151CCD549C00FB70B8 /* PhotoCellCVC.swift */; };
 		DFFB661F1CCF3D2600FB70B8 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFFB661E1CCF3D2600FB70B8 /* Photo.swift */; };
@@ -28,7 +27,6 @@
 		DFEA9F701CAAC7A400C8C281 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DFEA9F751CAAC7A400C8C281 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DFEA9F781CAAC7A400C8C281 /* VirtualTourist.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = VirtualTourist.xcdatamodel; sourceTree = "<group>"; };
-		DFEA9F7A1CAAC7A500C8C281 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DFEA9F7D1CAAC7A500C8C281 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DFEA9F7F1CAAC7A500C8C281 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DFFB66151CCD549C00FB70B8 /* PhotoCellCVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoCellCVC.swift; sourceTree = "<group>"; };
@@ -76,7 +74,6 @@
 				DFFB66151CCD549C00FB70B8 /* PhotoCellCVC.swift */,
 				DFFF1EEE1CBE864100EB8E86 /* FlickrAPI */,
 				DFEA9F741CAAC7A400C8C281 /* Main.storyboard */,
-				DFEA9F7A1CAAC7A500C8C281 /* Assets.xcassets */,
 				DFEA9F7C1CAAC7A500C8C281 /* LaunchScreen.storyboard */,
 				DFEA9F7F1CAAC7A500C8C281 /* Info.plist */,
 				DFEA9F771CAAC7A400C8C281 /* VirtualTourist.xcdatamodeld */,
@@ -156,7 +153,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				DFEA9F7E1CAAC7A500C8C281 /* LaunchScreen.storyboard in Resources */,
-				DFEA9F7B1CAAC7A500C8C281 /* Assets.xcassets in Resources */,
 				DFEA9F761CAAC7A400C8C281 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -291,10 +287,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = VirtualTourist/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ROB.VirtualTourist;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -306,10 +305,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = VirtualTourist/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ROB.VirtualTourist;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_INSTALL_OBJC_HEADER = NO;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 			};

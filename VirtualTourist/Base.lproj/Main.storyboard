@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -19,26 +20,63 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CnF-00-juC">
-                                <rect key="frame" x="0.0" y="0.0" width="599" height="601"/>
+                                <rect key="frame" x="0.0" y="0.0" width="599" height="550"/>
                                 <subviews>
                                     <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="6un-wA-8YG">
-                                        <rect key="frame" x="0.0" y="0.0" width="599" height="601"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="599" height="550"/>
                                     </mapView>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="6un-wA-8YG" secondAttribute="trailing" id="5Pb-CR-N0x"/>
-                                    <constraint firstItem="6un-wA-8YG" firstAttribute="leading" secondItem="CnF-00-juC" secondAttribute="leading" id="8K8-ti-VRw"/>
-                                    <constraint firstAttribute="bottom" secondItem="6un-wA-8YG" secondAttribute="bottom" id="F9T-jq-0k3"/>
-                                    <constraint firstItem="6un-wA-8YG" firstAttribute="top" secondItem="CnF-00-juC" secondAttribute="top" id="eiF-Yh-p41"/>
+                                    <constraint firstAttribute="trailing" secondItem="6un-wA-8YG" secondAttribute="trailing" id="Ucm-gE-ly2"/>
+                                    <constraint firstItem="6un-wA-8YG" firstAttribute="leading" secondItem="CnF-00-juC" secondAttribute="leading" id="Vfg-gZ-uv8"/>
+                                    <constraint firstItem="6un-wA-8YG" firstAttribute="top" secondItem="CnF-00-juC" secondAttribute="top" id="eYV-Yg-n8f"/>
+                                    <constraint firstAttribute="bottom" secondItem="6un-wA-8YG" secondAttribute="bottom" id="gNW-8S-kyR"/>
+                                </constraints>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="nbr-py-r0J">
+                                <rect key="frame" x="-1" y="550" width="599" height="50"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3MC-NT-pGg">
+                                        <rect key="frame" x="0.0" y="0.0" width="599" height="50"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0oG-Ph-grm">
+                                                <rect key="frame" x="0.0" y="0.0" width="599" height="50"/>
+                                                <color key="backgroundColor" white="0.66666666669999997" alpha="0.19" colorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="0oG-Ph-grm" secondAttribute="height" multiplier="12:1" id="hGv-7s-UuK"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                <state key="normal" title="Clear All Locations">
+                                                    <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </state>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="0oG-Ph-grm" secondAttribute="bottom" id="6X1-uL-0ln"/>
+                                            <constraint firstItem="0oG-Ph-grm" firstAttribute="leading" secondItem="3MC-NT-pGg" secondAttribute="leading" id="ACQ-CM-WvI"/>
+                                            <constraint firstItem="0oG-Ph-grm" firstAttribute="top" secondItem="3MC-NT-pGg" secondAttribute="top" id="Xaf-r1-qJ1"/>
+                                            <constraint firstAttribute="trailing" secondItem="0oG-Ph-grm" secondAttribute="trailing" id="cqC-xU-H5G"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="3MC-NT-pGg" firstAttribute="top" secondItem="nbr-py-r0J" secondAttribute="top" id="ATU-Iu-Z0k"/>
+                                    <constraint firstAttribute="bottom" secondItem="3MC-NT-pGg" secondAttribute="bottom" id="hz5-SF-9Be"/>
+                                    <constraint firstItem="3MC-NT-pGg" firstAttribute="leading" secondItem="nbr-py-r0J" secondAttribute="leading" id="tcY-yN-Jdd"/>
+                                    <constraint firstAttribute="trailing" secondItem="3MC-NT-pGg" secondAttribute="trailing" id="zRF-92-Q7h"/>
                                 </constraints>
                             </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="CnF-00-juC" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="71f-up-P5L"/>
-                            <constraint firstItem="CnF-00-juC" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="9sM-c0-M8U"/>
-                            <constraint firstItem="CnF-00-juC" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Brf-9M-LEt"/>
-                            <constraint firstItem="CnF-00-juC" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="xaU-RF-6Hd"/>
+                            <constraint firstItem="CnF-00-juC" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" id="H6q-E3-IAZ"/>
+                            <constraint firstItem="nbr-py-r0J" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-21" id="Mrm-Fk-QDQ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="CnF-00-juC" secondAttribute="trailing" constant="-19" id="OTg-zJ-Y7D"/>
+                            <constraint firstItem="nbr-py-r0J" firstAttribute="top" secondItem="CnF-00-juC" secondAttribute="bottom" id="Oa9-Ae-c7D"/>
+                            <constraint firstItem="CnF-00-juC" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="mBY-6S-nhV"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="nbr-py-r0J" secondAttribute="trailing" constant="-18" id="o11-pZ-gQ2"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="nbr-py-r0J" secondAttribute="bottom" id="oNq-50-6ld"/>
                         </constraints>
                     </view>
                     <connections>

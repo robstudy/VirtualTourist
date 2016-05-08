@@ -68,6 +68,7 @@ class FlickrAPI {
                 for item in photosArray {
                     
                     guard let imageURLString = item["url_m"] as? String else {
+                        completion(returnedData: ["":""])
                         print("Cannot find key 'url_m' in dictionary")
                         return
                     }

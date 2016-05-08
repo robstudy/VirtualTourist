@@ -80,6 +80,20 @@ class TravelLocationVC: UIViewController, MKMapViewDelegate, UIGestureRecognizer
         return fetchedResultsController
     }()
     
+    lazy var fetchedResultsControllerPhoto: NSFetchedResultsController = {
+        
+        let fetchRequest = NSFetchRequest(entityName: "Photo")
+        
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "uuid", ascending: true)]
+        
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
+            managedObjectContext: self.sharedContext,
+            sectionNameKeyPath: nil,
+            cacheName: nil)
+        
+        return fetchedResultsController
+    }()
+    
     private func saveData() {
         do {
             try self.sharedContext.save()

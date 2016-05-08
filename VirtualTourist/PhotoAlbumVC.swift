@@ -172,13 +172,16 @@ class PhotoAlbumVC: UIViewController, MKMapViewDelegate, NSFetchedResultsControl
         
         FlickrAPI.sharedSession().getImageFromFlickr(lat, longitude: long, completion: { returnedData in
             
-            for (id, value) in returnedData {
-                let imageUrl = NSURL(string: value)
-                if let imageData = NSData(contentsOfURL: imageUrl!){
-                    let getPhoto = Photo(data: imageData, picId: id, context: self.sharedContext)
-                    getPhoto.setValue(self.pin, forKey: "pin")
-                    print(getPhoto)
-                    self.saveData()
+            if returnedData != [ "":"" ] {
+                for (id, value) in returnedData {
+                    let imageUrl = NSURL(string: value)
+                    if let imageData = NSData(contentsOfURL: imageUrl!){
+                        let getPhoto = Photo(data: imageData, picId: id, context: self.sharedContext)
+                        getPhoto.setValue(self.pin, forKey: "pin")
+                        self.performFetch()
+                        self.resetView()
+                        self.saveData()
+                    }
                 }
             }
             self.performFetch()
