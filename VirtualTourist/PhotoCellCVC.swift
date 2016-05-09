@@ -12,7 +12,4 @@ class PhotoCellCVC: UICollectionViewCell {
     
     @IBOutlet weak var photoImage: UIImageView!
     
-    func setImageView(image: UIImageView) {
-        photoImage = image
-    }
 }

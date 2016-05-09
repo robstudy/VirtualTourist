@@ -49,6 +49,9 @@
                                                 <state key="normal" title="Clear All Locations">
                                                     <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="clearMapData:" destination="BYZ-38-t0r" eventType="touchUpInside" id="jZv-Qi-Wck"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

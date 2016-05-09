@@ -178,14 +178,16 @@ class PhotoAlbumVC: UIViewController, MKMapViewDelegate, NSFetchedResultsControl
                     if let imageData = NSData(contentsOfURL: imageUrl!){
                         let getPhoto = Photo(data: imageData, picId: id, context: self.sharedContext)
                         getPhoto.setValue(self.pin, forKey: "pin")
+                        self.saveData()
                         self.performFetch()
                         self.resetView()
-                        self.saveData()
                     }
                 }
+            } else {
+                self.performFetch()
+                self.resetView()
             }
-            self.performFetch()
-            self.resetView()
+
             self.toggleActivityView(false)
         })
     }
