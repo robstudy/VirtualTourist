@@ -56,7 +56,6 @@ class PhotoAlbumVC: UIViewController, MKMapViewDelegate, NSFetchedResultsControl
     //MARK: - Collection View
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print(self.fetchedResultsController.sections![section].numberOfObjects)
         if(section < 4) {
             return self.fetchedResultsController.sections![section].numberOfObjects
         } else {
@@ -206,8 +205,5 @@ class PhotoAlbumVC: UIViewController, MKMapViewDelegate, NSFetchedResultsControl
                 self.newCollectionButton.enabled = true
             }
         })
-
-        
     }
-    
 }

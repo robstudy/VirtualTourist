@@ -40,6 +40,7 @@ class FlickrAPI {
             }
             
             let parsedResult: AnyObject!
+            
             do {
                 parsedResult = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
             } catch {

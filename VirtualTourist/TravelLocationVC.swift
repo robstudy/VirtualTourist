@@ -34,13 +34,13 @@ class TravelLocationVC: UIViewController, MKMapViewDelegate, UIGestureRecognizer
         travelMap.delegate = self
     }
     
-    override func viewWillDisappear(animated: Bool) {
-        saveMapState()
-    }
-    
-    override func viewWillAppear(animated: Bool) {
+    override func viewDidAppear(animated: Bool) {
         performFetch()
         addAllPins()
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        saveMapState()
     }
 
     override func didReceiveMemoryWarning() {
@@ -58,6 +58,23 @@ class TravelLocationVC: UIViewController, MKMapViewDelegate, UIGestureRecognizer
                 self.performSegueWithIdentifier("showAlbum", sender: view)
             }
         })
+    }
+    
+    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+        
+        let reuseId = "pin"
+        
+        var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier(reuseId) as? MKPinAnnotationView
+        
+        if pinView == nil {
+            pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
+            pinView!.animatesDrop = true
+            pinView!.pinTintColor = UIColor.purpleColor()
+        } else {
+            pinView!.annotation = annotation
+        }
+        
+        return pinView
     }
     
     //MARK: - Core Data Convenience
@@ -183,20 +200,20 @@ class TravelLocationVC: UIViewController, MKMapViewDelegate, UIGestureRecognizer
                 if let imageData = NSData(contentsOfURL: imageUrl!){
                     let getPhoto = Photo(data: imageData, picId: id, context: self.sharedContext)
                     getPhoto.setValue(savedPin, forKey: "pin")
-                    print(getPhoto)
                     self.saveData()
                 }
             }
+            
+            print(returnedData.count)
         })
         
         saveData()
         performFetch()
-        addAllPins()
     }
     
     private func addAllPins() {
         
-        travelMap.removeAnnotations(travelMap.annotations)
+        self.travelMap.removeAnnotations(self.travelMap.annotations)
         var annotations = [MKPointAnnotation]()
         
         for entity in self.fetchedResultsController.fetchedObjects! {
