@@ -32,11 +32,14 @@ class TravelLocationVC: UIViewController, MKMapViewDelegate, UIGestureRecognizer
         
         fetchedResultsController.delegate = self
         travelMap.delegate = self
+        performFetch()
+        addAllPins()
     }
     
     override func viewDidAppear(animated: Bool) {
-        performFetch()
-        addAllPins()
+        super.viewDidAppear(animated)
+        //performFetch()
+        //addAllPins()
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -58,6 +61,10 @@ class TravelLocationVC: UIViewController, MKMapViewDelegate, UIGestureRecognizer
                 self.performSegueWithIdentifier("showAlbum", sender: view)
             }
         })
+    }
+    
+    func mapView(mapView: MKMapView, didDeselectAnnotationView view: MKAnnotationView) {
+        view.resignFirstResponder()
     }
     
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
