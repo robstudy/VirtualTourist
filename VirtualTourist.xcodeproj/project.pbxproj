@@ -12,6 +12,7 @@
 		DFEA9F761CAAC7A400C8C281 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DFEA9F741CAAC7A400C8C281 /* Main.storyboard */; };
 		DFEA9F791CAAC7A400C8C281 /* VirtualTourist.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DFEA9F771CAAC7A400C8C281 /* VirtualTourist.xcdatamodeld */; };
 		DFEA9F7E1CAAC7A500C8C281 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DFEA9F7C1CAAC7A500C8C281 /* LaunchScreen.storyboard */; };
+		DFFA080D1CE443B100269D4A /* Image.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DFFA080C1CE443B100269D4A /* Image.xcassets */; };
 		DFFB66161CCD549C00FB70B8 /* PhotoCellCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFFB66151CCD549C00FB70B8 /* PhotoCellCVC.swift */; };
 		DFFB661F1CCF3D2600FB70B8 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFFB661E1CCF3D2600FB70B8 /* Photo.swift */; };
 		DFFF1EE91CBB65A800EB8E86 /* CoreDataStackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFFF1EE81CBB65A800EB8E86 /* CoreDataStackManager.swift */; };
@@ -29,6 +30,7 @@
 		DFEA9F781CAAC7A400C8C281 /* VirtualTourist.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = VirtualTourist.xcdatamodel; sourceTree = "<group>"; };
 		DFEA9F7D1CAAC7A500C8C281 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DFEA9F7F1CAAC7A500C8C281 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DFFA080C1CE443B100269D4A /* Image.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Image.xcassets; sourceTree = "<group>"; };
 		DFFB66151CCD549C00FB70B8 /* PhotoCellCVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoCellCVC.swift; sourceTree = "<group>"; };
 		DFFB661E1CCF3D2600FB70B8 /* Photo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 		DFFF1EE81CBB65A800EB8E86 /* CoreDataStackManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStackManager.swift; sourceTree = "<group>"; };
@@ -80,6 +82,7 @@
 				DFFF1EE81CBB65A800EB8E86 /* CoreDataStackManager.swift */,
 				DFFF1EEA1CBB709000EB8E86 /* Pin.swift */,
 				DFFB661E1CCF3D2600FB70B8 /* Photo.swift */,
+				DFFA080C1CE443B100269D4A /* Image.xcassets */,
 			);
 			path = VirtualTourist;
 			sourceTree = "<group>";
@@ -153,6 +156,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DFEA9F7E1CAAC7A500C8C281 /* LaunchScreen.storyboard in Resources */,
+				DFFA080D1CE443B100269D4A /* Image.xcassets in Resources */,
 				DFEA9F761CAAC7A400C8C281 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -285,6 +289,7 @@
 		DFEA9F831CAAC7A500C8C281 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -302,6 +307,7 @@
 		DFEA9F841CAAC7A500C8C281 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
