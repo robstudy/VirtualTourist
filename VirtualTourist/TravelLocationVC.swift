@@ -15,8 +15,8 @@ class TravelLocationVC: UIViewController, MKMapViewDelegate, UIGestureRecognizer
     @IBOutlet weak var travelMap: MKMapView!
     
     private let prefs = NSUserDefaults.standardUserDefaults()
-    private var sendLat: Double?
-    private var sendLong: Double?
+    private var sendLat: Double = 0
+    private var sendLong: Double = 0
     private var holdPin: Pin!
     
     //MARK: - View Methods
@@ -54,17 +54,30 @@ class TravelLocationVC: UIViewController, MKMapViewDelegate, UIGestureRecognizer
     //MARK: - MapView Delegate
     
     func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
-        sendLat = view.annotation?.coordinate.latitude
-        sendLong = view.annotation?.coordinate.longitude
-        findPinToSend(sendLat!, long: sendLong!, completionHandler: { foundPin in
-            if foundPin {
+        sendLat = (view.annotation?.coordinate.latitude)!
+        sendLong = (view.annotation?.coordinate.longitude)!
+        findPinToSend(sendLat, long: sendLong, completionHandler: { didFindPin, foundPin in
+            if didFindPin {
+                self.holdPin = foundPin
+                self.resignFirstResponder()
                 self.performSegueWithIdentifier("showAlbum", sender: view)
             }
         })
     }
-    
-    func mapView(mapView: MKMapView, didDeselectAnnotationView view: MKAnnotationView) {
-        view.resignFirstResponder()
+
+    func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, didChangeDragState newState: MKAnnotationViewDragState, fromOldState oldState: MKAnnotationViewDragState) {
+
+            sendLat = (view.annotation?.coordinate.latitude)!
+            sendLong = (view.annotation?.coordinate.longitude)!
+            let sendDictionary = ["latitude": sendLat, "longitude": sendLong]
+
+        findPinToSend(sendLat, long: sendLong, completionHandler: { didFindPin, foundPin in
+            
+            if didFindPin == false {
+                foundPin.updatePin(sendDictionary)
+                self.saveData()
+            }
+        })
     }
     
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
@@ -76,11 +89,12 @@ class TravelLocationVC: UIViewController, MKMapViewDelegate, UIGestureRecognizer
         if pinView == nil {
             pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
             pinView!.animatesDrop = true
+            pinView!.draggable = true
             pinView!.pinTintColor = UIColor.purpleColor()
         } else {
             pinView!.annotation = annotation
         }
-        
+
         return pinView
     }
     
@@ -241,14 +255,16 @@ class TravelLocationVC: UIViewController, MKMapViewDelegate, UIGestureRecognizer
         travelMap.addAnnotations(annotations)
     }
     
-    private func findPinToSend(lat: Double, long: Double, completionHandler: (foundPin: Bool) -> Void) {
+    private func findPinToSend(lat: Double, long: Double, completionHandler: (didFindPin: Bool, foundPin: Pin) -> Void) {
         for entity in self.fetchedResultsController.fetchedObjects!{
             let pin = entity as! Pin
             if lat == pin.latitude && long == pin.longitude {
-                holdPin = pin
+                let theFoundPin = pin
                 print("Found pin!")
                 
-                completionHandler(foundPin: true)
+                completionHandler(didFindPin: true, foundPin: theFoundPin)
+            } else if self.holdPin != nil {
+                completionHandler(didFindPin: false, foundPin: self.holdPin)
             }
         }
     }

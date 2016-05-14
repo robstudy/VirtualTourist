@@ -8,8 +8,13 @@
 
 import Foundation
 import CoreData
+import MapKit
 
-class Pin : NSManagedObject {
+class Pin : NSManagedObject, MKAnnotation {
+    
+    var coordinate: CLLocationCoordinate2D {
+        return CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+    }
     
     struct Keys {
         static let Latitude = "latitude"
@@ -36,5 +41,10 @@ class Pin : NSManagedObject {
         latitude = dictionary[Keys.Latitude] as! Double
         longitude = dictionary[Keys.Longitude] as! Double
         uuid = dictionary[Keys.UUID] as! String
+    }
+    
+    func updatePin(dictionary: [String : AnyObject]){
+        latitude = dictionary[Keys.Latitude] as! Double
+        longitude = dictionary[Keys.Longitude] as! Double
     }
 }
