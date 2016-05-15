@@ -35,16 +35,6 @@ class TravelLocationVC: UIViewController, MKMapViewDelegate, UIGestureRecognizer
         performFetch()
         addAllPins()
     }
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        //performFetch()
-        //addAllPins()
-    }
-    
-    override func viewWillDisappear(animated: Bool) {
-        saveMapState()
-    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -98,6 +88,10 @@ class TravelLocationVC: UIViewController, MKMapViewDelegate, UIGestureRecognizer
         return pinView
     }
     
+    func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+        saveMapState()
+    }
+    
     //MARK: - Core Data Convenience
     
     var sharedContext: NSManagedObjectContext {
@@ -143,52 +137,6 @@ class TravelLocationVC: UIViewController, MKMapViewDelegate, UIGestureRecognizer
             album.longitude = sendLong
             album.pin = holdPin
         }
-    }
-    
-    //MARK: - Persist Map Functions
-    
-    private func persistentMap() {
-        guard let latloc: Double = prefs.doubleForKey("lat") else {
-            print("no latitude location yet")
-            return
-        }
-        
-        guard let longloc: Double = prefs.doubleForKey("long") else {
-            print("no longitutde")
-            return
-        }
-        
-        guard let latDelta: Double = prefs.doubleForKey("latDelta") else {
-            print("no latDelta")
-            return
-        }
-        
-        guard let longDelta: Double = prefs.doubleForKey("longDelta") else {
-            print("no longDelta")
-            return
-        }
-        
-        if latloc != 0 && longloc != 0{
-            travelMap.centerCoordinate.latitude = latloc
-            travelMap.centerCoordinate.longitude = longloc
-        }
-        
-        if latDelta != 0 && longDelta != 0 {
-            let span = MKCoordinateSpan(latitudeDelta: latDelta, longitudeDelta: longDelta)
-            travelMap.region.span = span
-        }
-    }
-    
-    private func saveMapState() {
-        let latDelta = travelMap.region.span.latitudeDelta
-        let longDelta = travelMap.region.span.longitudeDelta
-        let lat: Double = travelMap.centerCoordinate.latitude
-        let long: Double = travelMap.centerCoordinate.longitude
-        
-        prefs.setDouble(lat, forKey: "lat")
-        prefs.setDouble(long, forKey: "long")
-        prefs.setDouble(latDelta, forKey: "latDelta")
-        prefs.setDouble(longDelta, forKey: "longDelta")
     }
     
     //MARK: - Pin Functions
@@ -272,12 +220,71 @@ class TravelLocationVC: UIViewController, MKMapViewDelegate, UIGestureRecognizer
     //MARK: - Clear Data
     @IBAction func clearMapData(sender: AnyObject) {
         
-        for entity in fetchedResultsController.fetchedObjects! {
-            sharedContext.deleteObject(entity as! NSManagedObject)
+        dispatch_async(dispatch_get_main_queue(), {
+        let actionAlert = UIAlertAction(title: "Yes", style: .Default) { (action) in
+            for entity in self.fetchedResultsController.fetchedObjects! {
+                self.sharedContext.deleteObject(entity as! NSManagedObject)
+                self.saveData()
+                self.performFetch()
+                self.addAllPins()
+            }
         }
+
+        let okPress = UIAlertAction(title: "No", style: .Default) {(action) in
+                return
+        }
+        
+        
+            let deleteAllPinsAlert = UIAlertController(title: "Warning!", message: "Do you want to delete all location data?", preferredStyle: .Alert)
+            deleteAllPinsAlert.addAction(actionAlert)
+            deleteAllPinsAlert.addAction(okPress)
+            self.presentViewController(deleteAllPinsAlert, animated: true, completion: nil)
+        })
+    }
     
-        saveData()
-        performFetch()
-        addAllPins()
+    //MARK: - Persist Map Functions
+    
+    private func persistentMap() {
+        guard let latloc: Double = prefs.doubleForKey("lat") else {
+            print("no latitude location yet")
+            return
+        }
+        
+        guard let longloc: Double = prefs.doubleForKey("long") else {
+            print("no longitutde")
+            return
+        }
+        
+        guard let latDelta: Double = prefs.doubleForKey("latDelta") else {
+            print("no latDelta")
+            return
+        }
+        
+        guard let longDelta: Double = prefs.doubleForKey("longDelta") else {
+            print("no longDelta")
+            return
+        }
+        
+        if latloc != 0 && longloc != 0{
+            travelMap.centerCoordinate.latitude = latloc
+            travelMap.centerCoordinate.longitude = longloc
+        }
+        
+        if latDelta != 0 && longDelta != 0 {
+            let span = MKCoordinateSpan(latitudeDelta: latDelta, longitudeDelta: longDelta)
+            travelMap.region.span = span
+        }
+    }
+    
+    private func saveMapState() {
+        let latDelta = travelMap.region.span.latitudeDelta
+        let longDelta = travelMap.region.span.longitudeDelta
+        let lat: Double = travelMap.centerCoordinate.latitude
+        let long: Double = travelMap.centerCoordinate.longitude
+        
+        prefs.setDouble(lat, forKey: "lat")
+        prefs.setDouble(long, forKey: "long")
+        prefs.setDouble(latDelta, forKey: "latDelta")
+        prefs.setDouble(longDelta, forKey: "longDelta")
     }
 }
