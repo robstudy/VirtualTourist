@@ -59,25 +59,40 @@ class PhotoAlbumVC: UIViewController, MKMapViewDelegate, NSFetchedResultsControl
     //MARK: - Collection View Delegate
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if(section < 4) {
+        return 15
+        /*if(section < 4) {
             return self.fetchedResultsController.sections![section].numberOfObjects
         } else {
             return 3
-        }
+        }*/
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! PhotoCellCVC
         
-        let photoImage = fetchedResultsController.objectAtIndexPath(indexPath) as! Photo
+        let countObjects = fetchedResultsController.fetchedObjects?.count
         
-        let urlData1 = UIImage(data: photoImage.image)
-        let imageView = UIImageView(image: urlData1)
-        cell.backgroundView = imageView
-        return cell
+        if indexPath.item < countObjects {
+            let cell = collectionView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath)
+            let photoImage = fetchedResultsController.objectAtIndexPath(indexPath) as! Photo
+            let urlData1 = UIImage(data: photoImage.image)
+            let imageView = UIImageView(image: urlData1)
+            cell.backgroundView = imageView
+            cell.layer.cornerRadius = 4.0
+            return cell
+        } else {
+            let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! PhotoCellCVC
+            cell.contentView.layer.cornerRadius = 4.0
+            cell.contentView.layer.borderWidth = 1.0
+            cell.contentView.layer.borderColor = UIColor.blueColor().CGColor
+            return cell
+        }
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        
+        let countObjects = fetchedResultsController.fetchedObjects?.count
+        
+        if indexPath.item < countObjects {
         
         let photoIndex = fetchedResultsController.objectAtIndexPath(indexPath) as! Photo
         
@@ -86,6 +101,7 @@ class PhotoAlbumVC: UIViewController, MKMapViewDelegate, NSFetchedResultsControl
         saveData()
         performFetch()
         resetView()
+        }
     }
     
     //MARK: - Core Data Functions
@@ -176,7 +192,8 @@ class PhotoAlbumVC: UIViewController, MKMapViewDelegate, NSFetchedResultsControl
         newCollectionButton.layer.zPosition = 1
         newCollectionButton.alpha = 0.5
         
-        photoCollection.registerClass(PhotoCellCVC.self, forCellWithReuseIdentifier: "photoCell")
+        //photoCollection.registerClass(PhotoCellCVC.self, forCellWithReuseIdentifier: "photoCell")
+        photoCollection.registerNib(UINib(nibName: "PhotoCellCVC", bundle: nil), forCellWithReuseIdentifier: reuseIdentifier)
         photoCollection.backgroundColor = UIColor.whiteColor()
         
         let space: CGFloat = 3.0

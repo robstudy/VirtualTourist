@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		DF0BF9B91CAD748300E87D11 /* TravelLocationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF0BF9B81CAD748300E87D11 /* TravelLocationVC.swift */; };
+		DF51450D1D00858700C8A2C0 /* PhotoCellCVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = DF51450C1D00858700C8A2C0 /* PhotoCellCVC.xib */; };
 		DFEA9F711CAAC7A400C8C281 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DFEA9F701CAAC7A400C8C281 /* AppDelegate.swift */; };
 		DFEA9F761CAAC7A400C8C281 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DFEA9F741CAAC7A400C8C281 /* Main.storyboard */; };
 		DFEA9F791CAAC7A400C8C281 /* VirtualTourist.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = DFEA9F771CAAC7A400C8C281 /* VirtualTourist.xcdatamodeld */; };
@@ -24,6 +25,7 @@
 
 /* Begin PBXFileReference section */
 		DF0BF9B81CAD748300E87D11 /* TravelLocationVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TravelLocationVC.swift; sourceTree = "<group>"; };
+		DF51450C1D00858700C8A2C0 /* PhotoCellCVC.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PhotoCellCVC.xib; sourceTree = "<group>"; };
 		DFEA9F6D1CAAC7A400C8C281 /* VirtualTourist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VirtualTourist.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DFEA9F701CAAC7A400C8C281 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DFEA9F751CAAC7A400C8C281 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -74,6 +76,7 @@
 				DF0BF9B81CAD748300E87D11 /* TravelLocationVC.swift */,
 				DFFF1EEC1CBE22AF00EB8E86 /* PhotoAlbumVC.swift */,
 				DFFB66151CCD549C00FB70B8 /* PhotoCellCVC.swift */,
+				DF51450C1D00858700C8A2C0 /* PhotoCellCVC.xib */,
 				DFFF1EEE1CBE864100EB8E86 /* FlickrAPI */,
 				DFEA9F741CAAC7A400C8C281 /* Main.storyboard */,
 				DFEA9F7C1CAAC7A500C8C281 /* LaunchScreen.storyboard */,
@@ -158,6 +161,7 @@
 				DFEA9F7E1CAAC7A500C8C281 /* LaunchScreen.storyboard in Resources */,
 				DFFA080D1CE443B100269D4A /* Image.xcassets in Resources */,
 				DFEA9F761CAAC7A400C8C281 /* Main.storyboard in Resources */,
+				DF51450D1D00858700C8A2C0 /* PhotoCellCVC.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

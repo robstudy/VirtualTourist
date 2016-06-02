@@ -29,8 +29,6 @@ class FlickrAPI {
             }
             
             guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
-                
-                
                 return
             }
             
@@ -82,6 +80,8 @@ class FlickrAPI {
                     returnedArray.append(imageURLString)
                     returnedDictionary[imageId] = imageURLString
                 }
+                completion(returnedData: returnedDictionary)
+            } else {
                 completion(returnedData: returnedDictionary)
             }
         }
