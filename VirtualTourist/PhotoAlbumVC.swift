@@ -10,8 +10,6 @@ import UIKit
 import MapKit
 import CoreData
 
-private let reuseIdentifier = "photoCell"
-
 class PhotoAlbumVC: UIViewController, MKMapViewDelegate, NSFetchedResultsControllerDelegate, UICollectionViewDelegate, UICollectionViewDataSource {
     
     //MARK: - IBOutlet & Variables
@@ -80,7 +78,7 @@ class PhotoAlbumVC: UIViewController, MKMapViewDelegate, NSFetchedResultsControl
             cell.layer.cornerRadius = 4.0
             return cell
         } else {
-            let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! PhotoCellCVC
+            let cell = collectionView.dequeueReusableCellWithReuseIdentifier("photoCell", forIndexPath: indexPath) as! PhotoCellCVC
             cell.contentView.layer.cornerRadius = 4.0
             cell.contentView.layer.borderWidth = 1.0
             cell.contentView.layer.borderColor = UIColor.blueColor().CGColor
@@ -193,7 +191,7 @@ class PhotoAlbumVC: UIViewController, MKMapViewDelegate, NSFetchedResultsControl
         newCollectionButton.alpha = 0.5
         
         //photoCollection.registerClass(PhotoCellCVC.self, forCellWithReuseIdentifier: "photoCell")
-        photoCollection.registerNib(UINib(nibName: "PhotoCellCVC", bundle: nil), forCellWithReuseIdentifier: reuseIdentifier)
+        photoCollection.registerNib(UINib(nibName: "PhotoCellCVC", bundle: nil), forCellWithReuseIdentifier: "photoCell")
         photoCollection.backgroundColor = UIColor.whiteColor()
         
         let space: CGFloat = 3.0

@@ -18,6 +18,23 @@ extension FlickrAPI {
         static let SAFE_SEARCH = "1"
         static let DATA_FORMAT = "json"
         static let NO_JSON_CALLBACK = "1"
+        static func randomSort(randomResult: Int) -> String {
+            switch randomResult {
+            case 0:
+                return "date-posted-asc"
+            case 1:
+                return "date-posted-desc"
+            case 2:
+                return "date-taken-asc"
+            case 3:
+                return "date-taken-desc"
+            case 4:
+                return "interestingness-desc"
+            case 5:
+                return "interestingness-asc"
+            default:
+                return "relevance"
+            }
+        }
     }
-    
 }

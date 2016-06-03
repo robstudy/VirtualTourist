@@ -17,18 +17,22 @@ class FlickrAPI {
         
         var returnedArray = [String]()
         var returnedDictionary = Dictionary<String, String>()
+        let randomSortString = FlickrStrings.randomSort(Int(arc4random_uniform(6)))
         
-        let urlString = "\(FlickrStrings.BASE_URL)?method=\(FlickrStrings.METHOD_NAME)&api_key=\(FlickrStrings.API_KEY)&lat=\(latitude)&lon=\(longitude)&page=1&format=json&nojsoncallback=1&extras=\(FlickrStrings.EXTRAS)"
+        let urlString = "\(FlickrStrings.BASE_URL)?method=\(FlickrStrings.METHOD_NAME)&api_key=\(FlickrStrings.API_KEY)&lat=\(latitude)&lon=\(longitude)&page=1&format=json&nojsoncallback=1&extras=\(FlickrStrings.EXTRAS)&per_page=15&sort=\(randomSortString)"
         let url = NSURL(string: urlString)!
         let request = NSURLRequest(URL: url)
         
         let task = session.dataTaskWithRequest(request) {(data, response, error) in
             guard (error == nil) else {
                 print("There was an error with the request: \(error)")
+                completion(returnedData: returnedDictionary)
                 return
             }
             
             guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
+                print(error)
+                completion(returnedData: returnedDictionary)
                 return
             }
             
