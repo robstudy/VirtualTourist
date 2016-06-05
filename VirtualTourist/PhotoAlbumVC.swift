@@ -18,8 +18,9 @@ class PhotoAlbumVC: UIViewController, MKMapViewDelegate, NSFetchedResultsControl
     @IBOutlet weak var photoCollection: UICollectionView!
     @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
     @IBOutlet weak var newCollectionButton: UIButton!
-    @IBOutlet weak var activityView: UIActivityIndicatorView!
     
+    private var loading = false
+    private var canDelete = false
     var latitude: Double?
     var longitude: Double?
     var pin: Pin!
@@ -29,6 +30,7 @@ class PhotoAlbumVC: UIViewController, MKMapViewDelegate, NSFetchedResultsControl
     override func viewDidLoad() {
         super.viewDidLoad()
         performFetch()
+        allPicturesSelectedSetFalse()
         configureController()
         loadPinLocation()
     }
@@ -57,12 +59,11 @@ class PhotoAlbumVC: UIViewController, MKMapViewDelegate, NSFetchedResultsControl
     //MARK: - Collection View Delegate
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 15
-        /*if(section < 4) {
-            return self.fetchedResultsController.sections![section].numberOfObjects
+        if loading {
+            return 15
         } else {
-            return 3
-        }*/
+            return self.fetchedResultsController.sections![section].numberOfObjects
+        }
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -76,6 +77,9 @@ class PhotoAlbumVC: UIViewController, MKMapViewDelegate, NSFetchedResultsControl
             let imageView = UIImageView(image: urlData1)
             cell.backgroundView = imageView
             cell.layer.cornerRadius = 4.0
+            if photoImage.selected {
+                cell.alpha = 0.3
+            }
             return cell
         } else {
             let cell = collectionView.dequeueReusableCellWithReuseIdentifier("photoCell", forIndexPath: indexPath) as! PhotoCellCVC
@@ -92,13 +96,18 @@ class PhotoAlbumVC: UIViewController, MKMapViewDelegate, NSFetchedResultsControl
         
         if indexPath.item < countObjects {
         
-        let photoIndex = fetchedResultsController.objectAtIndexPath(indexPath) as! Photo
+            let photoIndex = fetchedResultsController.objectAtIndexPath(indexPath) as! Photo
+            
+            if photoIndex.selected {
+                photoIndex.selected = false
+            } else {
+                photoIndex.selected = true
+            }
         
-        sharedContext.deleteObject(photoIndex)
-        
-        saveData()
-        performFetch()
-        resetView()
+            saveData()
+            performFetch()
+            resetView()
+            toggleNewCollectionButton()
         }
     }
     
@@ -145,6 +154,11 @@ class PhotoAlbumVC: UIViewController, MKMapViewDelegate, NSFetchedResultsControl
     }
     
     @IBAction func newCollection(sender: AnyObject) {
+        
+        if canDelete {
+            deletePictures()
+            return
+        }
         
         for entity in fetchedResultsController.fetchedObjects! {
             sharedContext.deleteObject(entity as! NSManagedObject)
@@ -228,16 +242,58 @@ class PhotoAlbumVC: UIViewController, MKMapViewDelegate, NSFetchedResultsControl
     private func toggleActivityView(on: Bool) {
         dispatch_async(dispatch_get_main_queue(), {
             if on {
-                self.activityView.startAnimating()
+                self.loading = on
                 self.mapView.alpha = 0.5
                 self.newCollectionButton.alpha = 0.5
                 self.newCollectionButton.enabled = false
             } else {
-                self.activityView.stopAnimating()
+                self.loading = on
                 self.mapView.alpha = 1
                 self.newCollectionButton.alpha = 1
                 self.newCollectionButton.enabled = true
             }
         })
+    }
+    
+    private func toggleNewCollectionButton() {
+        
+        var canToggleButton = false
+        
+        for item in fetchedResultsController.fetchedObjects! {
+            
+            if item.selected == true {
+                canToggleButton = true
+            }
+        }
+        
+        if canToggleButton {
+            newCollectionButton.setTitle("Delete Pictures", forState: .Normal)
+            canDelete = true
+        } else {
+            newCollectionButton.setTitle("New Collection", forState: .Normal)
+        }
+    }
+    
+    private func deletePictures() {
+        for item in fetchedResultsController.fetchedObjects! {
+            if item.selected == true {
+                sharedContext.deleteObject(item as! NSManagedObject)
+            }
+        }
+        
+        saveData()
+        performFetch()
+        resetView()
+        toggleNewCollectionButton()
+        canDelete = false
+    }
+    
+    private func allPicturesSelectedSetFalse() {
+        for item in fetchedResultsController.fetchedObjects! {
+            let photoIndex = item as! Photo
+            photoIndex.selected = false
+        }
+        saveData()
+        resetView()
     }
 }

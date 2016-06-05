@@ -53,6 +53,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DF360BA81D03A3D700EE82B5 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				DFEA9F771CAAC7A400C8C281 /* VirtualTourist.xcdatamodeld */,
+				DFFF1EE81CBB65A800EB8E86 /* CoreDataStackManager.swift */,
+				DFFF1EEA1CBB709000EB8E86 /* Pin.swift */,
+				DFFB661E1CCF3D2600FB70B8 /* Photo.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 		DFEA9F641CAAC7A400C8C281 = {
 			isa = PBXGroup;
 			children = (
@@ -78,13 +89,10 @@
 				DFFB66151CCD549C00FB70B8 /* PhotoCellCVC.swift */,
 				DF51450C1D00858700C8A2C0 /* PhotoCellCVC.xib */,
 				DFFF1EEE1CBE864100EB8E86 /* FlickrAPI */,
+				DF360BA81D03A3D700EE82B5 /* Model */,
 				DFEA9F741CAAC7A400C8C281 /* Main.storyboard */,
 				DFEA9F7C1CAAC7A500C8C281 /* LaunchScreen.storyboard */,
 				DFEA9F7F1CAAC7A500C8C281 /* Info.plist */,
-				DFEA9F771CAAC7A400C8C281 /* VirtualTourist.xcdatamodeld */,
-				DFFF1EE81CBB65A800EB8E86 /* CoreDataStackManager.swift */,
-				DFFF1EEA1CBB709000EB8E86 /* Pin.swift */,
-				DFFB661E1CCF3D2600FB70B8 /* Photo.swift */,
 				DFFA080C1CE443B100269D4A /* Image.xcassets */,
 			);
 			path = VirtualTourist;

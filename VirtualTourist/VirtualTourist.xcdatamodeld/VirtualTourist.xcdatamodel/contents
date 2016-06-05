@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="14F1713" minimumToolsVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="14F1808" minimumToolsVersion="Automatic">
     <entity name="Photo" representedClassName=".Photo" syncable="YES">
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="image" optional="YES" attributeType="Binary" storedInTruthFile="YES" syncable="YES"/>
+        <attribute name="selected" optional="YES" attributeType="Boolean" syncable="YES"/>
         <relationship name="pin" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Pin" inverseName="photos" inverseEntity="Pin" syncable="YES"/>
     </entity>
     <entity name="Pin" representedClassName=".Pin" syncable="YES">
@@ -12,7 +13,7 @@
         <relationship name="photos" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="Photo" inverseName="pin" inverseEntity="Photo" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Photo" positionX="-54" positionY="-9" width="128" height="90"/>
+        <element name="Photo" positionX="-54" positionY="-9" width="128" height="105"/>
         <element name="Pin" positionX="-38" positionY="153" width="128" height="103"/>
     </elements>
 </model>

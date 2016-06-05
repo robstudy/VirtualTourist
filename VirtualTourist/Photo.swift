@@ -14,10 +14,12 @@ class Photo: NSManagedObject {
     struct Keys {
         static let Image = "image"
         static let Id = "id"
+        static let Selected = "selected"
     }
 
     @NSManaged var image: NSData
     @NSManaged var id: String
+    @NSManaged var selected: Bool
     
     override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
         super.init(entity: entity, insertIntoManagedObjectContext: context)
@@ -34,6 +36,12 @@ class Photo: NSManagedObject {
         
         //Id
         id = picId
+        
+        //Selected
+        selected = false
     }
     
+    func picSelected(isSelected: Bool) {
+        selected = isSelected
+    }
 }

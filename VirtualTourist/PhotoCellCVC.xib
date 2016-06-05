@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -14,21 +15,19 @@
                 <rect key="frame" x="0.0" y="0.0" width="137" height="111"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="No Image Available" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CzL-Km-j8g">
-                        <rect key="frame" x="0.0" y="38" width="137" height="35"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                        <color key="textColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                    </textView>
+                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="Wh3-In-4Fr">
+                        <rect key="frame" x="50" y="37" width="37" height="37"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="Wh3-In-4Fr" secondAttribute="height" multiplier="1:1" id="AJk-nx-JLy"/>
+                        </constraints>
+                        <color key="color" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    </activityIndicatorView>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
             <constraints>
-                <constraint firstItem="CzL-Km-j8g" firstAttribute="leading" secondItem="j10-Y3-kU3" secondAttribute="leading" id="14P-sG-1tM"/>
-                <constraint firstItem="CzL-Km-j8g" firstAttribute="centerY" secondItem="j10-Y3-kU3" secondAttribute="centerY" id="9vQ-mM-94n"/>
-                <constraint firstAttribute="trailing" secondItem="CzL-Km-j8g" secondAttribute="trailing" id="PWJ-Mx-sm1"/>
-                <constraint firstItem="CzL-Km-j8g" firstAttribute="top" secondItem="j10-Y3-kU3" secondAttribute="top" constant="38" id="U9E-JK-1oi"/>
+                <constraint firstItem="Wh3-In-4Fr" firstAttribute="centerX" secondItem="j10-Y3-kU3" secondAttribute="centerX" id="G1L-Qe-AYR"/>
+                <constraint firstItem="Wh3-In-4Fr" firstAttribute="centerY" secondItem="j10-Y3-kU3" secondAttribute="centerY" id="ged-Ja-QDn"/>
             </constraints>
             <size key="customSize" width="137" height="111"/>
             <point key="canvasLocation" x="246.5" y="-40.5"/>

@@ -9,9 +9,7 @@
 import UIKit
 
 class PhotoCellCVC: UICollectionViewCell {
-    
-    @IBOutlet weak var noImageText: UITextView!
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
