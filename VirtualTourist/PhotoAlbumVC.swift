@@ -35,10 +35,6 @@ class PhotoAlbumVC: UIViewController, MKMapViewDelegate, NSFetchedResultsControl
         loadPinLocation()
     }
     
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-    }
-    
     //MARK: - MapView Delegate
     
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
@@ -160,6 +156,8 @@ class PhotoAlbumVC: UIViewController, MKMapViewDelegate, NSFetchedResultsControl
             return
         }
         
+        loading = true
+        
         for entity in fetchedResultsController.fetchedObjects! {
             sharedContext.deleteObject(entity as! NSManagedObject)
         }
@@ -201,12 +199,11 @@ class PhotoAlbumVC: UIViewController, MKMapViewDelegate, NSFetchedResultsControl
         photoCollection.delegate = self
         photoCollection.dataSource = self
         fetchedResultsController.delegate = self
-        newCollectionButton.layer.zPosition = 1
-        newCollectionButton.alpha = 0.5
         
-        //photoCollection.registerClass(PhotoCellCVC.self, forCellWithReuseIdentifier: "photoCell")
         photoCollection.registerNib(UINib(nibName: "PhotoCellCVC", bundle: nil), forCellWithReuseIdentifier: "photoCell")
         photoCollection.backgroundColor = UIColor.whiteColor()
+        newCollectionButton.layer.zPosition = 1
+        newCollectionButton.alpha = 0.5
         
         let space: CGFloat = 3.0
         let dimension = (self.view.frame.width - (2 * space)) / 3.0
@@ -242,7 +239,6 @@ class PhotoAlbumVC: UIViewController, MKMapViewDelegate, NSFetchedResultsControl
     private func toggleActivityView(on: Bool) {
         dispatch_async(dispatch_get_main_queue(), {
             if on {
-                self.loading = on
                 self.mapView.alpha = 0.5
                 self.newCollectionButton.alpha = 0.5
                 self.newCollectionButton.enabled = false
@@ -260,7 +256,6 @@ class PhotoAlbumVC: UIViewController, MKMapViewDelegate, NSFetchedResultsControl
         var canToggleButton = false
         
         for item in fetchedResultsController.fetchedObjects! {
-            
             if item.selected == true {
                 canToggleButton = true
             }

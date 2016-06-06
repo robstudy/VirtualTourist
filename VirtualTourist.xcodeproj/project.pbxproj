@@ -64,6 +64,16 @@
 			name = Model;
 			sourceTree = "<group>";
 		};
+		DF360BA91D054AD400EE82B5 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				DF0BF9B81CAD748300E87D11 /* TravelLocationVC.swift */,
+				DFFF1EEC1CBE22AF00EB8E86 /* PhotoAlbumVC.swift */,
+				DFFB66151CCD549C00FB70B8 /* PhotoCellCVC.swift */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
 		DFEA9F641CAAC7A400C8C281 = {
 			isa = PBXGroup;
 			children = (
@@ -84,14 +94,12 @@
 			isa = PBXGroup;
 			children = (
 				DFEA9F701CAAC7A400C8C281 /* AppDelegate.swift */,
-				DF0BF9B81CAD748300E87D11 /* TravelLocationVC.swift */,
-				DFFF1EEC1CBE22AF00EB8E86 /* PhotoAlbumVC.swift */,
-				DFFB66151CCD549C00FB70B8 /* PhotoCellCVC.swift */,
-				DF51450C1D00858700C8A2C0 /* PhotoCellCVC.xib */,
+				DF360BA91D054AD400EE82B5 /* ViewControllers */,
 				DFFF1EEE1CBE864100EB8E86 /* FlickrAPI */,
 				DF360BA81D03A3D700EE82B5 /* Model */,
 				DFEA9F741CAAC7A400C8C281 /* Main.storyboard */,
 				DFEA9F7C1CAAC7A500C8C281 /* LaunchScreen.storyboard */,
+				DF51450C1D00858700C8A2C0 /* PhotoCellCVC.xib */,
 				DFEA9F7F1CAAC7A500C8C281 /* Info.plist */,
 				DFFA080C1CE443B100269D4A /* Image.xcassets */,
 			);

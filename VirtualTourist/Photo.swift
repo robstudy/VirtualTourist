@@ -14,7 +14,6 @@ class Photo: NSManagedObject {
     struct Keys {
         static let Image = "image"
         static let Id = "id"
-        static let Selected = "selected"
     }
 
     @NSManaged var image: NSData
@@ -39,9 +38,5 @@ class Photo: NSManagedObject {
         
         //Selected
         selected = false
-    }
-    
-    func picSelected(isSelected: Bool) {
-        selected = isSelected
     }
 }

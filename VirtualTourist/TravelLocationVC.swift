@@ -38,7 +38,6 @@ class TravelLocationVC: UIViewController, MKMapViewDelegate, UIGestureRecognizer
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     //MARK: - MapView Delegate
@@ -46,10 +45,10 @@ class TravelLocationVC: UIViewController, MKMapViewDelegate, UIGestureRecognizer
     func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
         sendLat = (view.annotation?.coordinate.latitude)!
         sendLong = (view.annotation?.coordinate.longitude)!
+        mapView.deselectAnnotation(view.annotation, animated: false)
         findPinToSend(sendLat, long: sendLong, completionHandler: { didFindPin, foundPin in
             if didFindPin {
                 self.holdPin = foundPin
-                self.resignFirstResponder()
                 self.performSegueWithIdentifier("showAlbum", sender: view)
             }
         })
@@ -57,9 +56,9 @@ class TravelLocationVC: UIViewController, MKMapViewDelegate, UIGestureRecognizer
 
     func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, didChangeDragState newState: MKAnnotationViewDragState, fromOldState oldState: MKAnnotationViewDragState) {
 
-            sendLat = (view.annotation?.coordinate.latitude)!
-            sendLong = (view.annotation?.coordinate.longitude)!
-            let sendDictionary = ["latitude": sendLat, "longitude": sendLong]
+        sendLat = (view.annotation?.coordinate.latitude)!
+        sendLong = (view.annotation?.coordinate.longitude)!
+        let sendDictionary = ["latitude": sendLat, "longitude": sendLong]
 
         findPinToSend(sendLat, long: sendLong, completionHandler: { didFindPin, foundPin in
             
@@ -218,8 +217,8 @@ class TravelLocationVC: UIViewController, MKMapViewDelegate, UIGestureRecognizer
     }
     
     //MARK: - Clear Data
+    
     @IBAction func clearMapData(sender: AnyObject) {
-        
         dispatch_async(dispatch_get_main_queue(), {
         let actionAlert = UIAlertAction(title: "Yes", style: .Default) { (action) in
             for entity in self.fetchedResultsController.fetchedObjects! {
@@ -233,9 +232,8 @@ class TravelLocationVC: UIViewController, MKMapViewDelegate, UIGestureRecognizer
         let okPress = UIAlertAction(title: "No", style: .Default) {(action) in
                 return
         }
-        
-        
-            let deleteAllPinsAlert = UIAlertController(title: "Warning!", message: "Do you want to delete all location data?", preferredStyle: .Alert)
+            
+        let deleteAllPinsAlert = UIAlertController(title: "Warning!", message: "Do you want to delete all location data?", preferredStyle: .Alert)
             deleteAllPinsAlert.addAction(actionAlert)
             deleteAllPinsAlert.addAction(okPress)
             self.presentViewController(deleteAllPinsAlert, animated: true, completion: nil)
