@@ -110,9 +110,9 @@
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="50"/>
                                         <items>
                                             <navigationItem id="YU4-SI-eWm">
-                                                <barButtonItem key="leftBarButtonItem" title="BACK" id="akZ-eL-zEd">
+                                                <barButtonItem key="leftBarButtonItem" title="CANCEL" id="akZ-eL-zEd">
                                                     <connections>
-                                                        <action selector="back:" destination="eba-Pz-70E" id="C0G-Pr-Zmm"/>
+                                                        <action selector="cancel:" destination="eba-Pz-70E" id="y1u-cg-Ib9"/>
                                                     </connections>
                                                 </barButtonItem>
                                             </navigationItem>
