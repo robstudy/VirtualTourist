@@ -8,9 +8,8 @@
 
 import Foundation
 
-private let sharedAPI = FlickrAPI()
-
 class FlickrAPI {
+    static let sharedSession = FlickrAPI()
     private var session = NSURLSession.sharedSession()
     
     func getImageFromFlickr(latitude: Double, longitude: Double, completion: (returnedData: Dictionary<String, String>)-> Void){
@@ -90,9 +89,5 @@ class FlickrAPI {
             }
         }
         task.resume()
-    }
-    
-    class func sharedSession() -> FlickrAPI {
-        return sharedAPI
     }
 }

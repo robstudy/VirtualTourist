@@ -169,7 +169,7 @@ class PhotoAlbumVC: UIViewController, MKMapViewDelegate, NSFetchedResultsControl
         let lat = pin.latitude
         let long = pin.longitude
         
-        FlickrAPI.sharedSession().getImageFromFlickr(lat, longitude: long, completion: { returnedData in
+        FlickrAPI.sharedSession.getImageFromFlickr(lat, longitude: long, completion: { returnedData in
             
             if returnedData != [ "":"" ] {
                 for (id, value) in returnedData {

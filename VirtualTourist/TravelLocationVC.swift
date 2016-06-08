@@ -27,7 +27,7 @@ class TravelLocationVC: UIViewController, MKMapViewDelegate, UIGestureRecognizer
         persistentMap()
         
         let pinDrop = UILongPressGestureRecognizer(target: self, action: "dropPin:")
-        pinDrop.minimumPressDuration = 1.5
+        pinDrop.minimumPressDuration = 1.2
         self.travelMap.addGestureRecognizer(pinDrop)
         
         fetchedResultsController.delegate = self
@@ -161,7 +161,7 @@ class TravelLocationVC: UIViewController, MKMapViewDelegate, UIGestureRecognizer
         
         self.travelMap.addAnnotation(annotation)
         
-        FlickrAPI.sharedSession().getImageFromFlickr(lat, longitude: long, completion: { returnedData in
+        FlickrAPI.sharedSession.getImageFromFlickr(lat, longitude: long, completion: { returnedData in
             
             for (id, value) in returnedData {
                 let imageUrl = NSURL(string: value)
